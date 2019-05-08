@@ -1,0 +1,29 @@
+The SCSS Grid Layout: 
+
+The Sass is pretty straightforward here and most of it can actually work fine with good old CSS. The reason I’ve used Sass is to make the spacing a little easier to handle and keep the code a little more organised with some (very light) nesting.
+
+How to Work Out Each Column Size: 
+
+Let Sass do it: If you don’t want to work this out every time the spacing changes, Sass can actually do the calculation for you. Scroll down a little and I explain how to let Sass handle the heavy lifting, then the width automatically adjusts when you change the value $grid. However, I recommend doing this once you know how it works. Here’s what the self-calculating code looks like below:
+
+$grid:12;
+$breakpoint: ("xs":567px, "md":768px, "lq":1024px, "xl":1200px);
+@for $i from 1 through $grid
+{
+    .col-#{$i}
+        {
+            width: ($i / $grid) * 100%;
+        }
+}
+@each $name, $size  in $breakpoint {
+    @media only screen and  (max-width: #{$size})
+    {
+        @for $i from 1 through $grid
+        {
+            .col-#{$name}-#{$i}
+                {
+                    width: ($i / $grid) * 100%;
+                }
+         }
+    }
+}
